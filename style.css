@@ -1,0 +1,85 @@
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    .container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 6vmin;
+        background-color: #345995;
+        min-height: 100vh;
+
+    }
+    .game{
+        margin-top: 6vmin;
+        display: flex;
+        flex-wrap: wrap;
+        height: 70vmin;
+        width: 70vmin;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5vmin;
+    }
+    .hide{
+        display: none;
+    }
+   
+    .btn{
+        height: 20vmin;
+        width: 20vmin;
+        font-size: 7vmin;
+        font-weight: 900;
+        color: #FB4D3D;
+        
+        border-radius: 2vmin;
+        box-shadow: 0 0 15 black;
+    }
+    .reset{
+        margin-top: 3vmin;
+        background-color: rgb(33, 30, 30);
+        height: 4.5vmin;
+        width: 11vmin;
+        color: white;
+        border-radius: 2vmin;
+    }
+    .start{
+        margin-top: 3vmin;
+        background-color: rgb(33, 30, 30);
+        height: 5vmin;
+        width: 13vmin;
+        color: white;
+        border-radius: 2vmin;
+    }
+    .home{
+        margin-top: 3vmin;
+        background-color: rgb(238, 0, 0);
+        height: 4.5vmin;
+        width: 11vmin;
+        color: white;
+        border-radius: 2vmin;
+    }
+    .mode,.computer{
+        margin-top: 3vmin;
+        background-color: rgb(33, 30, 30);
+        height: 4.5vmin;
+        width: 11vmin;
+        color: white;
+        border-radius: 2vmin;
+
+    }
+    .btnO{
+        height: 20vmin;
+        width: 20vmin;
+        font-size: 7vmin;
+        font-weight: 900;
+        color: #05f439;
+        
+        border-radius: 2vmin;
+        box-shadow: 0 0 15 black;
+    }
+ .start,.reset {
+  margin: 2vmin 0;
+  
+}
