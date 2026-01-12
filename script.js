@@ -44,16 +44,22 @@ boxes.forEach((btn, index) => {
                 board[index] = "X";
                 currentPlayerO = false;
                 btn.classList.add("btnO"); 
+                clickSound.currentTime=0;
+                clickSound.play();
             } else { 
                 btn.innerText = "O";
                 board[index] = "O";
                 currentPlayerO = true;
                 btn.classList.remove("btnO");
+                clickSound.currentTime=0;
+                clickSound.play();
             }
         } else {
             
             btn.innerText = "X";
             board[index] = "X";
+            clickSound.currentTime=0;
+            clickSound.play();
         }
 
         btn.disabled = true;
@@ -83,14 +89,31 @@ const checkWinner = () => {
       if (pos1 === pos2 && pos2 === pos3) {
         winnerName.innerText="the winner is player"+pos1;
         gameOver=true;
+        clickSound.currentTime=0;
+        
 
 
         boxes.forEach((btn) => {
             btn.disabled = true;
             
          });
-        return; 
+          if(pos1==="X" && pos2 === "X" && pos3 === "X"){
+            winSound.play();
+          }
+          else{
+            loseSound.currentTime=1;
+            loseSound.play();
+          }
+        return;
+
       }
+      if(pos1==="X" && pos2 === "X" && pos3 === "X"){
+        winSound.play();
+      }
+      if(pos1==="O" && pos2 === "O" && pos3 === "O"){
+        loseSound.play();
+      }
+            
 
 
     }
@@ -100,6 +123,7 @@ const checkWinner = () => {
   if (gameOver===false&&moveCount === 9) {
         winnerName.innerText = "Match Draw";
         gameOver = true;
+        drawSound.play();
         boxes.forEach((btn) => {
             btn.disabled = true;
            });
@@ -120,7 +144,11 @@ function startNewGame (selectedMode)  {
         btn.classList.remove("btnO");
     });
     
-    
+    clickSound.pause();
+    winSound.pause();
+    drawSound.pause();
+    loseSound.pause();
+    restSound.play();
     game.classList.remove("hide");
     homeBtn.classList.remove("hide");
     pvpBtn.classList.add("hide");
@@ -146,10 +174,12 @@ computerBtn.addEventListener("click", () => {
     
     pvpBtn.classList.add("hide");
     computerBtn.classList.add("hide");
+    restSound.play();
 });
 
 homeBtn.addEventListener("click", () => {
-    location.reload(); 
+  restSound.play();
+  location.reload(); 
 });
 //move or mode logic
 //easy random move
@@ -222,3 +252,9 @@ function writeO(index) {
     checkWinner();
 }
 
+//sound
+let clickSound = new Audio("click.mp3");
+let winSound = new Audio("win.mp3");
+let restSound = new Audio("reset.mp3");
+let loseSound = new Audio("lose.mp3");
+let drawSound = new Audio("draw.mp3");
