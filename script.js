@@ -1,7 +1,7 @@
 let boxes = document.querySelectorAll(".btn");
 let game = document.querySelector(".game");
 let resetBtn = document.querySelector(".reset");
-let starBtn = document.querySelector(".start");
+let pvpBtn = document.querySelector(".start");
 let homeBtn = document.querySelector(".home");
 let winnerName=document.querySelector(".winnerName");
 let computerBtn = document.querySelector(".computer");
@@ -10,6 +10,11 @@ let mediumBtn = document.querySelector(".medium");
 let hardBtn = document.querySelector(".hard");
 let currentPlayerO = true;
 let moveCount=0;
+let gameOver = false;
+
+let mode="m";
+
+let board = ["", "", "", "", "", "", "", "", ""];
 
 let winPatterns = [
   [0,1,2],
@@ -26,26 +31,44 @@ resetBtn.classList.add("hide");
 easyBtn.classList.add("hide");
 mediumBtn.classList.add("hide");
 hardBtn.classList.add("hide");
-boxes.forEach((btn)=>{
-    btn.addEventListener("click",()=>{
-        if(currentPlayerO === true){
-            btn.innerText= "X";
-            currentPlayerO = false;
-            btn.classList.add("btnO");
-            btn.disabled = true;
+//clik logic
+boxes.forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+        
+        if (board[index] !== "" || gameOver) return;
+
+       
+        if (mode === "p") {
+            if (currentPlayerO) { 
+                btn.innerText = "X";
+                board[index] = "X";
+                currentPlayerO = false;
+                btn.classList.add("btnO"); 
+            } else { 
+                btn.innerText = "O";
+                board[index] = "O";
+                currentPlayerO = true;
+                btn.classList.remove("btnO");
+            }
+        } else {
             
+            btn.innerText = "X";
+            board[index] = "X";
         }
-        else{
-            btn.innerText="O"
-            currentPlayerO = true;
-             btn.classList.remove("btnO");
-             btn.disabled = true;
+
+        btn.disabled = true;
+        moveCount++;
+        checkWinner();
+
+        
+        if (!gameOver && mode !== "p") {
+            setTimeout(() => {
+                if (mode === "e") eBotMove();
+                else if (mode === "m") mBotMove();
+                //else if (mode === "h") hBotMove(); 
+            }, 150);
         }
-       moveCount++;
-       checkWinner();
-      
-    })
-   
+    });
 });
 
 const checkWinner = () => {
@@ -59,6 +82,8 @@ const checkWinner = () => {
     if (pos1 !== "" && pos2 !== "" && pos3 !== "") {
       if (pos1 === pos2 && pos2 === pos3) {
         winnerName.innerText="the winner is player"+pos1;
+        gameOver=true;
+
 
         boxes.forEach((btn) => {
             btn.disabled = true;
@@ -69,64 +94,131 @@ const checkWinner = () => {
 
 
     }
-      if (moveCount === 9) {
-          winnerName.innerText = "Match Draw";
+      
 
+  }
+  if (gameOver===false&&moveCount === 9) {
+        winnerName.innerText = "Match Draw";
+        gameOver = true;
         boxes.forEach((btn) => {
             btn.disabled = true;
            });
         }
-
-  }
+};
+//button logic
+function startNewGame (selectedMode)  {
+    mode = selectedMode; 
+    winnerName.innerText = "";
+    moveCount = 0;
+    gameOver = false;
+    currentPlayerO = true; 
+    board = ["", "", "", "", "", "", "", "", ""];
+    
+    boxes.forEach((btn) => {
+        btn.innerText = "";
+        btn.disabled = false;
+        btn.classList.remove("btnO");
+    });
+    
+    
+    game.classList.remove("hide");
+    homeBtn.classList.remove("hide");
+    pvpBtn.classList.add("hide");
+    computerBtn.classList.add("hide");
+    resetBtn.classList.remove("hide");
+    easyBtn.classList.add("hide");
+    mediumBtn.classList.add("hide");
+    hardBtn.classList.add("hide");
 };
 
+pvpBtn.addEventListener("click", () => startNewGame("p"));
 
-resetBtn.addEventListener("click",()=>{
-  currentPlayerO=false;
-  winnerName.innerText="";
-  moveCount=0;
+easyBtn.addEventListener("click", () => startNewGame("e"));
 
-   boxes.forEach((btn) => {
-            btn.disabled = false;
-            btn.innerText= "";
-         });
+mediumBtn.addEventListener("click", () => startNewGame("m"));
+
+resetBtn.addEventListener("click", () => startNewGame(mode));
+
+computerBtn.addEventListener("click", () => {
+    easyBtn.classList.remove("hide");
+    mediumBtn.classList.remove("hide");
+    hardBtn.classList.remove("hide");
     
+    pvpBtn.classList.add("hide");
+    computerBtn.classList.add("hide");
+});
+
+homeBtn.addEventListener("click", () => {
+    location.reload(); 
+});
+//move or mode logic
+//easy random move
+function eBotMove() {
+    if(gameOver===true){
+      return;
+    }
+
+    let mappedBoard = board.map(function (value, index) {
+      if (value === "") {
+        return index;
+      } else {
+        return null;
+      }
+    });
+
+    let emptyIndexes = mappedBoard.filter(function (index) {
+      return index !== null;
+    });
+
+    if (emptyIndexes.length === 0) return;
+
+
+    let randomIndex = emptyIndexes[Math.floor(Math.random() * emptyIndexes.length)];
+
+    board[randomIndex] = "O";
+    boxes[randomIndex].innerText = "O";
+    boxes[randomIndex].disabled = true;
+    moveCount++;
+
+    checkWinner();
+}
+
+
+//medium
+//block player 
+
+function mBotMove(){
+    if (gameOver) return;
+
+    for (let i = 0; i < winPatterns.length; i++) {
+    let pattern = winPatterns[i];
+
+    let pos1 = boxes[pattern[0]].innerText;
+    let pos2 = boxes[pattern[1]].innerText;
+    let pos3 = boxes[pattern[2]].innerText;
+
+    if (pos1 === "" && pos2 == "X" && pos3 === "X") {
+      writeO(pattern[0]);   return;
+    }
+  if(pos1 === "X" && pos2 === "" && pos3 === "X"){
+
+     writeO(pattern[1]);    return;
+  }
+  if(pos1 === "X" && pos2 === "X" && pos3 === ""){
+     writeO(pattern[2]);    return; 
+  }
+
+  }
+eBotMove();
   
-});
+}
 
-starBtn.addEventListener("click",()=>{
-  currentPlayerO=false;
-  winnerName.innerText="";
-  game.classList.remove("hide");
-  homeBtn.classList.remove("hide");
-  starBtn.classList.add("hide");
-  resetBtn.classList.remove("hide");
- 
+function writeO(index) {
 
+  boxes[index].innerText="O";
+  boxes[index].disabled=true;
+  board[index]="O";
+    moveCount++;
+    checkWinner();
+}
 
-
-   boxes.forEach((btn) => {
-            btn.disabled = false;
-            btn.innerText= "";
-         });
-    
-  
-});
-homeBtn.addEventListener("click",()=>{
-  game.classList.add("hide");
-  homeBtn.classList.add("hide");
-  starBtn.classList.remove("hide");
-  resetBtn.classList.add("hide");
-});
-
-computerBtn.addEventListener("click",()=>{
-  easyBtn.classList.remove("hide");
-  mediumBtn.classList.remove("hide");
-  hardBtn.classList.remove("hide");
-  game.classList.add("hide");
-  homeBtn.classList.add("hide");
-  starBtn.classList.add("hide");
-  resetBtn.classList.add("hide");
-  computerBtn.classList.add("hide");
-
-})
