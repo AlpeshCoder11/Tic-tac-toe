@@ -8,10 +8,26 @@
         align-items: center;
         justify-content: center;
         font-size: 6vmin;
-        background-color: #345995;
+        background: radial-gradient(circle at top, #4b6cb7, #182848);
         min-height: 100vh;
 
     }
+.soundBtn {
+  position: absolute;
+  top: 2vmin;
+  right: 2vmin;
+  padding: 1vmin 2vmin;
+  font-size: 2.5vmin;
+  border-radius: 2vmin;
+  cursor: pointer;
+  border: none;
+  background: linear-gradient(to right, #ff9800, #ff5722);
+  color: white;
+  font-weight: 700;
+}
+
+
+
     .game{
         margin-top: 6vmin;
         display: flex;
@@ -21,6 +37,9 @@
         align-items: center;
         justify-content: center;
         gap: 1.5vmin;
+        background-color: #1f2a44;
+        padding: 1.5vmin;
+        border-radius: 2vmin;
     }
     .hide{
         display: none;
@@ -32,41 +51,90 @@
         font-size: 7vmin;
         font-weight: 900;
         color: #FB4D3D;
-        
+        cursor: pointer;
         border-radius: 2vmin;
         box-shadow: 0 0 15 black;
+        background-color: #ffffff;
+        border: 2px solid #1f2a44;
     }
+.controls {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+  margin-top: 4vmin;
+}
+
     .reset{
         margin-top: 3vmin;
-        background-color: rgb(33, 30, 30);
-        height: 4.5vmin;
-        width: 11vmin;
+        box-shadow: 0.9vmin 0.9vmin 0.6vmin -1vmin #a5a5a5;
+        height: 6.5vmin;
+        width: 17vmin;
         color: white;
+        border: none;
         border-radius: 2vmin;
+        cursor: pointer;
+        background: linear-gradient(to right top, #b71c24, #c41c3c,
+         #cf2154, #d72c6d, #db3a86);
     }
     .start{
+        border: none;
         margin-top: 3vmin;
         background-color: rgb(33, 30, 30);
-        height: 5vmin;
-        width: 13vmin;
+        height: 6.5vmin;
+        width: 16vmin;
         color: white;
+        cursor: pointer;
         border-radius: 2vmin;
-    }
+        background:
+                        linear-gradient(blue, transparent),
+                        linear-gradient(to top left, cyan, transparent),
+                        linear-gradient(to top right, blue, transparent);
+        font-weight: 900;
+   
+        border: none;
+   
+         }
     .home{
         margin-top: 3vmin;
         background-color: rgb(238, 0, 0);
-        height: 4.5vmin;
-        width: 11vmin;
+        height: 6.8vmin;
+        width: 17vmin;
         color: white;
         border-radius: 2vmin;
+        cursor: pointer;
+        background: linear-gradient(to right, #fc00ff, #00dbde);
+        filter: blur(14vimn);
+        font-weight: 700;
+        border: none;
     }
-    .mode,.computer{
+    .mode{
         margin-top: 3vmin;
         background-color: rgb(33, 30, 30);
-        height: 4.5vmin;
-        width: 11vmin;
+        height: 6.5vmin;
+        width: 17vmin;
         color: white;
         border-radius: 2vmin;
+        cursor: pointer;
+        font-weight: 650;
+        border: none;
+
+    }
+    .computer{
+         background:
+                linear-gradient(rgb(2, 243, 2), transparent),
+                linear-gradient(to top left, rgb(147, 255, 147), transparent),
+                linear-gradient(to top right, rgb(27, 188, 27), transparent);
+        margin-top: 4vmin;
+        
+        height: 6.5vmin;
+        width: 16vmin;
+        color: white;
+        border-radius: 2vmin;
+        cursor: pointer;
+        font-weight: 900;
+         box-shadow: 0.6vmin 0.9vmin 1vmin -2vmin rgb(253 29 29 /50%);
+        border: none;
 
     }
     .btnO{
@@ -83,3 +151,57 @@
   margin: 2vmin 0;
   
 }
+.hard{
+      background: linear-gradient(to right top, #ed433f, #df3a37,
+       #d2302f, #c42627, #b71b1f);
+}
+.medium{
+      background: linear-gradient(to top, #4292ff, #388cff, #2e86ff, #2380ff, #177aff);
+}
+.easy{
+     background: linear-gradient(to right, #11998e, #38ef7d);
+}
+
+.winnerName {
+  min-height: 6vmin;
+  margin-top: 2vmin;
+  font-weight: 800;
+  color: #fff;
+  animation: pop 2.4s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.win{
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  color: white !important;
+  animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 8vmin #00c6ff; }
+  to { box-shadow: 0 0 15vmin #0072ff; }
+}
+
+.btn:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 0 10vmin rgba(0,0,0,0.4);
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+@media (max-width: 600px) {
+  .game {
+    height: 90vmin;
+    width: 90vmin;
+  }
+  .btn {
+    height: 26vmin;
+    width: 26vmin;
+  }
+}
+
+

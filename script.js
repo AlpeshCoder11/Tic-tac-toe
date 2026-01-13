@@ -8,6 +8,7 @@ let computerBtn = document.querySelector(".computer");
 let easyBtn = document.querySelector(".easy");
 let mediumBtn = document.querySelector(".medium");
 let hardBtn = document.querySelector(".hard");
+
 let currentPlayerO = true;
 let moveCount=0;
 let gameOver = false;
@@ -90,6 +91,10 @@ const checkWinner = () => {
         winnerName.innerText="the winner is player"+pos1;
         gameOver=true;
         clickSound.currentTime=0;
+        boxes[pattern[0]].classList.add("win");
+        boxes[pattern[1]].classList.add("win");
+        boxes[pattern[2]].classList.add("win");
+
         
 
 
@@ -157,6 +162,7 @@ function startNewGame (selectedMode)  {
     easyBtn.classList.add("hide");
     mediumBtn.classList.add("hide");
     hardBtn.classList.add("hide");
+    
 };
 
 pvpBtn.addEventListener("click", () => startNewGame("p"));
