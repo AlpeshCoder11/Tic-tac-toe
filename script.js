@@ -71,7 +71,7 @@ boxes.forEach((btn, index) => {
             setTimeout(() => {
                 if (mode === "e") eBotMove();
                 else if (mode === "m") mBotMove();
-                //else if (mode === "h") hBotMove(); 
+                else if (mode === "h") hBotMove(); 
             }, 150);
         }
     });
@@ -165,6 +165,8 @@ easyBtn.addEventListener("click", () => startNewGame("e"));
 
 mediumBtn.addEventListener("click", () => startNewGame("m"));
 
+hardBtn.addEventListener("click",()=>startNewGame("h"));
+
 resetBtn.addEventListener("click", () => startNewGame(mode));
 
 computerBtn.addEventListener("click", () => {
@@ -242,6 +244,30 @@ function mBotMove(){
 eBotMove();
   
 }
+function hBotMove() {
+  ;
+  let bestScore = -Infinity;
+  let move;
+
+  for (let i = 0; i < 9; i++) {
+    if (board[i] === "") {
+      board[i] = "O";
+      let score = minimax(board, false);
+      board[i] = "";
+      if (score > bestScore) {
+        bestScore = score;
+        move = i;
+        
+      }
+    }
+  }
+
+  board[move] = "O";
+  boxes[move].innerText = "O";
+  boxes[move].disabled = true;
+  moveCount++; 
+  checkWinner();
+}
 
 function writeO(index) {
 
@@ -251,6 +277,56 @@ function writeO(index) {
     moveCount++;
     checkWinner();
 }
+function checkWinnerBoard(board) {
+  for (let i = 0; i < winPatterns.length; i++) {
+    let [a, b, c] = winPatterns[i];
+
+    if (
+      board[a] !== "" &&
+      board[a] === board[b] &&
+      board[a] === board[c]
+    ) {
+      return board[a]; 
+    }
+  }
+
+  if (!board.includes("")) {
+    return "draw";
+  }
+
+  return null; 
+}
+function minimax(board,isBotTurn){
+  let result = checkWinnerBoard(board);
+  if (result === "O") return 10;
+  if (result === "X") return -10;
+  if (result === "draw") return 0;
+  if(isBotTurn){
+    let bestscore =-Infinity;
+    for(let i=0;i<9;i++){
+      if(board[i]===""){
+        board[i]="O";
+        let score=minimax(board,false);
+        board[i]="";
+        bestscore=Math.max(score,bestscore);
+      }
+    }
+    return bestscore;
+  }
+  else{
+    let bestscore=Infinity;
+    for(let i=0;i<9;i++){
+      if(board[i]===""){
+        board[i]="X";
+        let score=minimax(board,true);
+        board[i]="";
+        bestscore=Math.min(score,bestscore);
+      }
+    }
+    return bestscore;
+  }
+}
+
 
 //sound
 let clickSound = new Audio("click.mp3");
