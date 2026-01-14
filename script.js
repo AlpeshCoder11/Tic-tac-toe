@@ -1,3 +1,4 @@
+
 let boxes = document.querySelectorAll(".btn");
 let game = document.querySelector(".game");
 let resetBtn = document.querySelector(".reset");
@@ -8,6 +9,7 @@ let computerBtn = document.querySelector(".computer");
 let easyBtn = document.querySelector(".easy");
 let mediumBtn = document.querySelector(".medium");
 let hardBtn = document.querySelector(".hard");
+let soundBtn = document.querySelector(".soundBtn");
 
 let currentPlayerO = true;
 let moveCount=0;
@@ -45,22 +47,20 @@ boxes.forEach((btn, index) => {
                 board[index] = "X";
                 currentPlayerO = false;
                 btn.classList.add("btnO"); 
-                clickSound.currentTime=0;
-                clickSound.play();
+                playSound(clickSound);
+
             } else { 
                 btn.innerText = "O";
                 board[index] = "O";
                 currentPlayerO = true;
                 btn.classList.remove("btnO");
-                clickSound.currentTime=0;
-                clickSound.play();
+                playSound(clickSound);
             }
         } else {
             
             btn.innerText = "X";
             board[index] = "X";
-            clickSound.currentTime=0;
-            clickSound.play();
+            playSound(clickSound);
         }
 
         btn.disabled = true;
@@ -103,20 +103,20 @@ const checkWinner = () => {
             
          });
           if(pos1==="X" && pos2 === "X" && pos3 === "X"){
-            winSound.play();
+            playSound(winSound);
           }
           else{
-            loseSound.currentTime=1;
-            loseSound.play();
+            playSound.currentTime=1;
+            playSound(loseSound);
           }
         return;
 
       }
       if(pos1==="X" && pos2 === "X" && pos3 === "X"){
-        winSound.play();
+        playSound(winSound);
       }
       if(pos1==="O" && pos2 === "O" && pos3 === "O"){
-        loseSound.play();
+        playSound(loseSound);
       }
             
 
@@ -128,7 +128,7 @@ const checkWinner = () => {
   if (gameOver===false&&moveCount === 9) {
         winnerName.innerText = "Match Draw";
         gameOver = true;
-        drawSound.play();
+        playSound(drawSound);
         boxes.forEach((btn) => {
             btn.disabled = true;
            });
@@ -147,13 +147,14 @@ function startNewGame (selectedMode)  {
         btn.innerText = "";
         btn.disabled = false;
         btn.classList.remove("btnO");
+        btn.classList.remove("win");
     });
     
     clickSound.pause();
     winSound.pause();
     drawSound.pause();
     loseSound.pause();
-    restSound.play();
+     playSound(restSound);
     game.classList.remove("hide");
     homeBtn.classList.remove("hide");
     pvpBtn.classList.add("hide");
@@ -182,11 +183,11 @@ computerBtn.addEventListener("click", () => {
     
     pvpBtn.classList.add("hide");
     computerBtn.classList.add("hide");
-    restSound.play();
+    playSound(restSound);
 });
 
 homeBtn.addEventListener("click", () => {
-  restSound.play();
+  playSound(restSound);
   location.reload(); 
 });
 //move or mode logic
@@ -335,8 +336,34 @@ function minimax(board,isBotTurn){
 
 
 //sound
+let soundOn  = true;
 let clickSound = new Audio("click.mp3");
 let winSound = new Audio("win.mp3");
 let restSound = new Audio("reset.mp3");
 let loseSound = new Audio("lose.mp3");
 let drawSound = new Audio("draw.mp3");
+function playSound(sound){
+   if(soundOn){
+    currentTime=0;
+    sound.play();
+    
+   }
+}
+
+function stopAllSounds() {
+  clickSound.pause();
+  winSound.pause();
+  loseSound.pause();
+  drawSound.pause();
+  restSound.pause();
+}
+
+
+
+soundBtn.addEventListener("click", () => {
+  soundOn = !soundOn;
+
+  if (!soundOn) stopAllSounds();
+
+  soundBtn.innerText = soundOn ? "🔊 Sound" : "🔇 Muted";
+});
