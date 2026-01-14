@@ -2,7 +2,7 @@
         margin: 0px;
         padding: 0px;
     }
-    .container{
+.container{
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -57,12 +57,12 @@
         background-color: #ffffff;
         border: 2px solid #1f2a44;
     }
-.controls {
+.controls{
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-  margin-top: 4vmin;
+        margin-top: 4vmin;
 }
 
     .reset{
