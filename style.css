@@ -66,6 +66,7 @@
 }
 
     .reset{
+        font-size: 3vmin;
         margin-top: 3vmin;
         box-shadow: 0.9vmin 0.9vmin 0.6vmin -1vmin #a5a5a5;
         height: 6.5vmin;
@@ -93,6 +94,7 @@
         font-weight: 900;
    
         border: none;
+        font-size: 3vmin;
    
          }
     .home{
@@ -107,8 +109,10 @@
         filter: blur(14vimn);
         font-weight: 700;
         border: none;
+        font-size: 3vmin;
     }
     .mode{
+        font-size: 4vmin;
         margin-top: 3vmin;
         background-color: rgb(33, 30, 30);
         height: 6.5vmin;
@@ -128,14 +132,14 @@
         margin-top: 4vmin;
         
         height: 6.5vmin;
-        width: 16vmin;
+        width: 18vmin;
         color: white;
         border-radius: 2vmin;
         cursor: pointer;
         font-weight: 900;
-         box-shadow: 0.6vmin 0.9vmin 1vmin -2vmin rgb(253 29 29 /50%);
+        box-shadow: 0.6vmin 0.9vmin 1vmin -2vmin rgb(253 29 29 /50%);
         border: none;
-
+        font-size: 3vmin;
     }
     .btnO{
         height: 20vmin;
@@ -198,6 +202,7 @@
     height: 90vmin;
     width: 90vmin;
   }
+
   .btn {
     height: 26vmin;
     width: 26vmin;
